@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const colors = require("colors");
 
 const connectDB = require("./config/db");
+const errorHandler = require("./middlewares/error.middleware");
 // get environments configurations
 dotenv.config({ path: "./config/config.env" });
 const port = process.env.PORT || 5000;
@@ -26,6 +27,9 @@ if (process.env.NODE_ENV === "development") {
 
 // routes
 app.use("/api/v1/bootcamps", bootcamps);
+
+// error-middleware
+app.use(errorHandler);
 
 const server = app.listen(port, () => {
   console.log(
