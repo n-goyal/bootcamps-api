@@ -1,7 +1,7 @@
 const ErrorResponse = require("../utils/errorResponse");
 
 const errorHandler = (err, req, res, next) => {
-  console.log(err);
+  console.log(err.errors);
   // new object to get a global
   let error = {
     ...err,
@@ -21,7 +21,7 @@ const errorHandler = (err, req, res, next) => {
   }
 
   // model field validations
-  if (err.name == "ValidationError") {
+  if (err.name == "ValidatorError") {
     const message = Object.values(err.errors).map((val) => val.message);
     error = new ErrorResponse(message, 400);
   }
