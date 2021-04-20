@@ -13,7 +13,8 @@ const port = process.env.PORT || 5000;
 connectDB();
 // import routers
 const bootcamps = require("./routes/bootcamps.router");
-const { connect } = require("./routes/bootcamps.router");
+const courses = require("./routes/courses.router");
+// const { connect } = require("./routes/bootcamps.router");
 
 const app = express();
 
@@ -27,6 +28,7 @@ if (process.env.NODE_ENV === "development") {
 
 // routes
 app.use("/api/v1/bootcamps", bootcamps);
+app.use("/api/v1/courses", courses);
 
 // error-middleware
 app.use(errorHandler);
