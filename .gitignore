@@ -1,3 +1,4 @@
 node_modules/
 config/config.env
 middlewares/logger.middleware.js
+public/

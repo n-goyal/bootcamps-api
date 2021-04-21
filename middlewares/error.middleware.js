@@ -1,7 +1,7 @@
 const ErrorResponse = require("../utils/errorResponse");
 
 const errorHandler = (err, req, res, next) => {
-  console.log(err.errors);
+  console.log(err);
   // new object to get a global
   let error = {
     ...err,
