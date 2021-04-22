@@ -14,6 +14,8 @@ const {
   uploadBootcampPhoto,
 } = require("../controllers/bootcamps.controller");
 
+const { protect, authorize } = require("../middlewares/auth.middleware");
+
 // other resource routers
 const courseRouter = require("./courses.router");
 // forward the request to courses router
@@ -25,14 +27,16 @@ router.route("/radius/:zipcode/:distance").get(getBootcampInRadius);
 router
   .route("/")
   .get(resultFilter(Bootcamp, "courses"), getBootcamps)
-  .post(createBootcamp);
+  .post(protect, authorize("publisher", "admin"), createBootcamp);
 
-router.route("/:id/photo").put(uploadBootcampPhoto);
+router
+  .route("/:id/photo")
+  .put(protect, authorize("publisher", "admin"), uploadBootcampPhoto);
 
 router
   .route("/:id")
   .get(getBootcamp)
-  .put(updateBootcamp)
-  .delete(deleteBootcamp);
+  .put(protect, authorize("publisher", "admin"), updateBootcamp)
+  .delete(protect, authorize("publisher", "admin"), deleteBootcamp);
 
 module.exports = router;

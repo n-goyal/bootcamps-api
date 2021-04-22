@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const colors = require("colors");
 const path = require("path");
 const fileupload = require("express-fileupload");
+const cookieParser = require("cookie-parser");
 
 const connectDB = require("./config/db");
 const errorHandler = require("./middlewares/error.middleware");
@@ -16,12 +17,14 @@ connectDB();
 // import routers
 const bootcamps = require("./routes/bootcamps.router");
 const courses = require("./routes/courses.router");
+const auth = require("./routes/auth.router");
 // const { connect } = require("./routes/bootcamps.router");
 
 const app = express();
 
-// body parser
+// middlwares
 app.use(express.json());
+app.use(cookieParser());
 
 // dev logging
 if (process.env.NODE_ENV === "development") {
@@ -37,6 +40,7 @@ app.use(express.static(path.join(__dirname, "public")));
 // routes
 app.use("/api/v1/bootcamps", bootcamps);
 app.use("/api/v1/courses", courses);
+app.use("/api/v1/auth", auth);
 
 // error-middleware
 app.use(errorHandler);
