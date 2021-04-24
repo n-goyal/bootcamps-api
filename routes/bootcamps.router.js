@@ -18,8 +18,11 @@ const { protect, authorize } = require("../middlewares/auth.middleware");
 
 // other resource routers
 const courseRouter = require("./courses.router");
+const reviewRouter = require("./reviews.router");
+
 // forward the request to courses router
 router.use("/:bootcampId/courses", courseRouter);
+router.use("/:bootcampId/reviews", reviewRouter);
 
 // bootcamp routes
 router.route("/radius/:zipcode/:distance").get(getBootcampInRadius);
