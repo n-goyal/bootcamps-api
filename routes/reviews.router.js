@@ -11,13 +11,13 @@ const Review = require("../models/Review");
 
 const router = express.Router({ mergeParams: true });
 
-const advancedResults = require("../middlewares/resultFiltering");
+const filteredResults = require("../middlewares/resultFiltering");
 const { protect, authorize } = require("../middlewares/auth.middleware");
 
 router
   .route("/")
   .get(
-    advancedResults(Review, {
+    filteredResults(Review, {
       path: "bootcamp",
       select: "name description",
     }),
