@@ -7,18 +7,22 @@ const fileupload = require("express-fileupload");
 const cookieParser = require("cookie-parser");
 
 const connectDB = require("./config/db");
+
 const errorHandler = require("./middlewares/error.middleware");
+
 // get environments configurations
 dotenv.config({ path: "./config/config.env" });
 const port = process.env.PORT || 5000;
 
 // connect db
 connectDB();
+
 // import routers
 const bootcamps = require("./routes/bootcamps.router");
 const courses = require("./routes/courses.router");
 const auth = require("./routes/auth.router");
-// const { connect } = require("./routes/bootcamps.router");
+const users = require("./routes/users.router");
+const reviews = require("./routes/reviews.router");
 
 const app = express();
 
@@ -41,6 +45,8 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/api/v1/bootcamps", bootcamps);
 app.use("/api/v1/courses", courses);
 app.use("/api/v1/auth", auth);
+app.use("/api/v1/users", users);
+app.use("/api/v1/reviews", reviews);
 
 // error-middleware
 app.use(errorHandler);
