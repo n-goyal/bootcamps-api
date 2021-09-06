@@ -5,6 +5,7 @@ const colors = require("colors");
 const path = require("path");
 const fileupload = require("express-fileupload");
 const cookieParser = require("cookie-parser");
+const mongoSanitize = require("express-mongo-sanitize");
 
 const connectDB = require("./config/db");
 
@@ -29,6 +30,9 @@ const app = express();
 // middlwares
 app.use(express.json());
 app.use(cookieParser());
+
+// SQL injection prevention
+app.use(mongoSanitize());
 
 // dev logging
 if (process.env.NODE_ENV === "development") {
