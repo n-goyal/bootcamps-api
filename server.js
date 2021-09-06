@@ -9,7 +9,10 @@ const cookieParser = require("cookie-parser");
 // security packages
 const mongoSanitize = require("express-mongo-sanitize");
 const helmet = require("helmet");
-const xss = require("xss-clean")
+const xss = require("xss-clean");
+const hpp = require("hpp");
+const rateLimit = require("express-rate-limit");
+const cors = require("cors");
 
 const connectDB = require("./config/db");
 
@@ -43,6 +46,19 @@ app.use(helmet());
 
 // prevent cross site scripting
 app.use(xss());
+
+// prevent http param polution
+app.use(hpp());
+
+// enable cors
+app.use(cors());
+
+// set rate limit
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 1000,
+  max: 100,
+});
+app.use(limiter);
 
 // dev logging
 if (process.env.NODE_ENV === "development") {
